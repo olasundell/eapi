@@ -181,3 +181,7 @@ subprojects {
 //	apply plugin: "rebel"
 //	build.dependsOn generateRebel
 }
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.4'
+}
