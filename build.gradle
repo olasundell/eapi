@@ -1,0 +1,183 @@
+apply plugin: 'project-report'
+/*
+TODO JRebel stuff
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		mavenRepo(name: 'zt-public-snapshots', url: 'http://repos.zeroturnaround.com/nexus/content/groups/zt-public/')
+	}
+	dependencies {
+		classpath group: 'org.zeroturnaround', name: 'gradle-jrebel-plugin', version: '1.0.3-SNAPSHOT'
+	}
+}
+*/
+
+ext {
+	escenicVersion = "5.3.4.122826"
+	commonVersion = "1.5.4.8"
+	modelVersion = "1.3.4.8"
+	springVersion = "3.1.0.RELEASE"
+	svtplayerVersion = '2012.47'
+	widgetFrameworkVersion = '1.8.0.0'
+	httpcache4jVersion = '3.2'
+
+	libraries = [
+		escenicIncluded: [
+				[group: "com.escenic.client", name: "client-core", version: modelVersion ],
+				[group: "com.escenic.client", name: "client-api", version: modelVersion ],
+				[group: "com.escenic.common", name: "common-nursery-servlet", version: commonVersion],
+				[group: "com.escenic.engine", name: "engine-presentation", version: escenicVersion],
+				[group: "com.escenic.engine", name: "engine-servletsupport", version: escenicVersion],
+				[group: "com.escenic.engine", name: "engine-taglib", version: escenicVersion],
+				[group: "com.escenic.widget-framework", name: "widget-framework-core-tags", version: widgetFrameworkVersion],
+				[group: "com.escenic.plugins.menu-editor", name: "menu-editor-taglib", version: '2.0.6.0' ],
+				[group: "com.twelvemonkeys", name: "twelvemonkeys-core", version: '2.3' ],
+				[group: "com.twelvemonkeys", name: "twelvemonkeys-servlet", version: '2.3.1-ece' ],
+		],
+		escenicProvided: [
+				[group: "com.escenic.common", name: "common-util", version: commonVersion],
+				[group: "com.escenic.common", name: "common-nursery", version: commonVersion],
+				[group: "com.escenic.engine.classification", name: "classification-core", version: escenicVersion],
+				[group: "com.escenic.engine.classification", name: "classification-api", version: escenicVersion],
+				[group: "com.escenic.engine", name: "engine-core", version: escenicVersion],
+				[group: "com.escenic.engine", name: "engine-search", version: escenicVersion],
+				[group: "com.escenic", name: "model-core", version: modelVersion ],
+				[group: "com.escenic.widget-framework", name: "widget-framework-common", version: widgetFrameworkVersion],
+		],
+		logging: [
+				[group: "log4j", name: "log4j", version: "1.2.14"],
+				[group: "commons-logging", name: "commons-logging", version: "1.1.1"],
+		        [group: "org.slf4j", name: "slf4j-api", version: "1.5.8"],
+				[group: "org.slf4j", name: "slf4j-log4j12", version: "1.5.8"],
+				[group: "org.slf4j", name: "slf4j-simple", version: "1.5.8"]
+		],
+		spring: [
+			[group: "org.springframework", name: "spring-core", version: springVersion],
+			[group: "org.springframework", name: "spring-context", version: springVersion],
+			[group: "org.springframework", name: "spring-beans", version: springVersion],
+			[group: "org.springframework", name: "spring-expression", version: springVersion],
+			[group: "org.springframework", name: "spring-asm", version: springVersion]
+		],
+		springWeb: [
+			[group: "org.springframework", name: "spring-webmvc", version: springVersion],
+			[group: "org.springframework", name: "spring-web", version: springVersion]
+		],
+		solrj: [
+		        [group: "org.apache.solr", name: "solr-solrj", version: "1.4.0"],
+				[group: "org.apache.solr", name: "solr-core", version: "1.4.0"]
+		],
+		web: [
+		        [group: "javax.servlet", name: "servlet-api", version: '2.5'],
+				[group: "javax.servlet", name: "jstl", version: '1.1.2'],
+				[group: "javax.servlet.jsp", name: "jsp-api", version: '2.0']
+		],
+		httpcache4j: [
+		        [group: 'org.codehaus.httpcache4j', name: 'httpcache4j-api', version: httpcache4jVersion ],
+				[group: 'org.codehaus.httpcache4j', name: 'httpcache4j-core', version: httpcache4jVersion ],
+				[group: 'org.codehaus.httpcache4j', name: 'httpcache4j-storage-api', version: httpcache4jVersion ],
+		],
+		test: [
+				[group: 'junit', name: 'junit', version: '4.+'],
+				[group: 'org.mockito', name: 'mockito-core', version: '1.8.5'],
+				[group: 'org.mockito', name: 'mockito-all', version: '1.8.5'],
+				[group: "org.springframework", name: "spring-test", version: springVersion],
+				[group: "org.powermock", name: "powermock-api-mockito", version: '1.4.10'],
+				[group: "org.powermock", name: "powermock-module-junit4", version: '1.4.10'],
+		],
+		emptypublication: [
+				[group: "se.svt", name: "empty-publication", version: escenicVersion+"_1", type: 'war'],
+		],
+		svtplayer: [
+				[group: "se.svt", name: "svtplayer", version: svtplayerVersion, ext: 'zip'],
+		]
+	]
+	daogenerator = [
+			[ 'se.svt.plugin:escenic-dao-generator-gradle-plugin:1.0-SNAPSHOT' ],
+			[ 'commons-collections:commons-collections:3.2' ],
+			[ 'commons-lang:commons-lang:2.3' ],
+			[ 'xom:xom:1.1' ],
+			[ 'trove4j:trove4j:2.1.0' ],
+			[ 'org.json:json:20080701' ],
+			libraries.escenicIncluded,
+			libraries.escenicProvided,
+			libraries.logging
+	]
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+
+	sourceCompatibility= 1.6
+	version = '1.0'
+
+	configurations {
+		provided
+	}
+
+	idea {
+		module {
+			scopes.PROVIDED.plus += configurations.provided
+		}
+	}
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven {
+			credentials {
+				username "reader"
+				password "yCad0z3luR"
+			}
+			url = [ "https://svtrepo.artifactoryonline.com/svtrepo/escenic/",
+					"https://svtrepo.artifactoryonline.com/svtrepo/libs-releases",
+					"https://svtrepo.artifactoryonline.com/svtrepo/svt-releases",
+					"https://svtrepo.artifactoryonline.com/svtrepo/escenic"]
+		}
+	}
+
+	dependencies {
+		provided libraries.escenicProvided
+		provided libraries.spring
+		provided libraries.logging
+		provided libraries.solrj
+		provided libraries.httpcache4j
+		provided libraries.test
+
+		compile 'org.jsoup:jsoup:1.6.1'
+		compile libraries.escenicIncluded
+		provided 'joda-time:joda-time:1.6.2'
+		provided 'commons-lang:commons-lang:2.3'
+		provided 'commons-io:commons-io:1.4'
+		provided 'commons-collections:commons-collections:3.2'
+		provided 'org.json:json:20080701'
+		provided 'org.codehaus.jackson:jackson-core-asl:1.8.2'
+		provided 'org.codehaus.jackson:jackson-mapper-asl:1.8.2'
+		provided 'com.google.guava:guava:r07'
+		provided 'xom:xom:1.1'
+		provided 'trove4j:trove4j:2.1.0'
+		testCompile project(":svt-test")
+	}
+
+	test {
+		testLogging {
+			events "failed", "standard_out"
+		}
+	}
+
+	sourceSets {
+		main {
+			compileClasspath += configurations.provided
+		}
+
+		test {
+			compileClasspath += configurations.provided
+			runtimeClasspath += configurations.provided
+		}
+	}
+
+//	TODO add JRebel stuff
+//	apply plugin: "rebel"
+//	build.dependsOn generateRebel
+}
