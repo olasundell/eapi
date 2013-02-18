@@ -12,6 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ApiController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public final ModelAndView displayPage() {
-		return new ModelAndView();
+		final ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("xml");
+
+		return modelAndView;
 	}
 }
