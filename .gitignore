@@ -5,5 +5,11 @@
 *.war
 *.ear
 
+# Gradle files #
+build/
+.gradle/
+
 # IntelliJ files #
-.idea
+.idea/
+out/
+*.iml
