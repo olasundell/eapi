@@ -157,7 +157,7 @@ subprojects {
 		provided 'com.google.guava:guava:r07'
 		provided 'xom:xom:1.1'
 		provided 'trove4j:trove4j:2.1.0'
-		testCompile project(":svt-test")
+		testCompile 'se.svt:svt-test:2011.16-SNAPSHOT'
 	}
 
 	test {
