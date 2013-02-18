@@ -10,7 +10,32 @@
 	<mvc:annotation-driven/>
 	<context:component-scan base-package="se.svt.api"/>
 
+    <bean id="api" class="neo.xredsys.api.IOAPI" factory-method="getAPI"/>
+    <bean id="objectLoader" factory-bean="api" factory-method="getObjectLoader"/>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="favorParameter" value="true"/>
+        <property name="parameterName" value="format"/>
+        <!-- Add viewname here to make this resolver handle the view -->
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <!-- JSON View -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+                    <property name="extractValueFromSingleKeyModel" value="true"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="2"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/views/" />
         <property name="suffix" value=".jsp" />
