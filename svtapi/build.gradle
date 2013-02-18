@@ -9,3 +9,5 @@ task copyToWebapps(type: Copy) {
 	rename("-1.0","")
 	into("/opt/svt/escenic-tomcat/apache-tomcat/webapps")
 }
+
+copyToWebapps.dependsOn('war')
