@@ -3,3 +3,9 @@ dependencies {
 }
 
 apply plugin: 'war'
+
+task copyToWebapps(type: Copy) {
+	from(file("${buildDir}/libs/webapp-1.0.war"))
+	rename("-1.0","")
+	into("/opt/svt/escenic-tomcat/apache-tomcat/webapps")
+}
