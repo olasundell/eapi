@@ -1,5 +1,10 @@
+apply plugin: 'jetty'
+
+httpPort = 8083
+
 dependencies {
 	compile project(":api")
+	compile libraries.web
 }
 
 apply plugin: 'war'
