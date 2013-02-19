@@ -47,5 +47,4 @@ public class ContentControllerTest {
 		Assert.assertNotNull(model);
 		Assert.assertNotNull(model.get("model"));
 	}
-
 }
