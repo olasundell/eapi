@@ -34,7 +34,7 @@ public class ContentModelFactoryTest {
 
 	@Test
 	public void shouldCreateModelWithFields() {
-		ContentModel model = contentModelFactory.createContentModel(article);
+		ContentModel model = contentModelFactory.createContentModel("", article);
 
 		Map<String, Object> fields = model.getFields();
 		Assert.assertNotNull(fields);

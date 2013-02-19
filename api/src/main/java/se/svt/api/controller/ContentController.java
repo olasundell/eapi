@@ -32,19 +32,9 @@ public class ContentController {
 	public final ModelAndView displayContent(@PathVariable int contentId) {
 		Article article = objectLoader.getArticle(contentId);
 
-		ContentModel contentModel = contentModelFactory.createContentModel(article);
+		ContentModel contentModel = contentModelFactory.createContentModel("", article);
 
 		return new ModelAndView("", "model", contentModel);
-	}
-
-	private ContentModel createContentModel(Article article) {
-
-		return contentModelFactory.createContentModel(article);
-	}
-
-	private Map<String, Object> createMapOfFields(Article article) {
-
-		return contentModelFactory.createMapOfFields(article);
 	}
 
 	public void setObjectLoader(ObjectLoader objectLoader) {

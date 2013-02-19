@@ -12,8 +12,8 @@ import java.util.Map;
 public class ContentModel {
 	private int id;
 	private String typeName;
-	private int homeSection;
-	List<Integer> sections = new ArrayList<Integer>();
+	private SectionListItem homeSection;
+	List<SectionListItem> sections = new ArrayList<SectionListItem>();
 	private Map<String, Object> fields;
 
 	public void setFields(Map<String,Object> fields) {
@@ -40,17 +40,16 @@ public class ContentModel {
 		return typeName;
 	}
 
-	public void setSections(Section[] sections) {
-		for (Section s: sections) {
-			this.sections.add(s.getId());
-		}
+	public void setSections(List<SectionListItem> sections) {
+		this.sections.clear();
+		this.sections.addAll(sections);
 	}
 
-	public void setHomeSection(int homeSection) {
+	public void setHomeSection(SectionListItem homeSection) {
 		this.homeSection = homeSection;
 	}
 
-	public int getHomeSection() {
+	public SectionListItem getHomeSection() {
 		return homeSection;
 	}
 }

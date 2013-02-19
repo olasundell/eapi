@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import se.svt.api.controller.converter.PublicationConverter;
 import se.svt.api.domain.SectionListItem;
+import se.svt.api.factory.SectionListItemFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 public class SectionController {
 	public static final String SECTIONS_URL_PATTERN = "http://svt.se/svtapi/%s/sections/%d";
 	public static final String CONTENT_URL_PATTERN = "http://svt.se/svtapi/%s/content/%d";
+	private final SectionListItemFactory sectionListItemFactory = new SectionListItemFactory();
 	@Autowired
 	private ObjectLoader objectLoader;
 
@@ -32,7 +34,7 @@ public class SectionController {
 		List<SectionListItem> sectionListItems = new ArrayList<SectionListItem>(publications.length);
 		for(Publication publication : publications) {
 			Section rootSection = publication.getRootSection();
-			sectionListItems.add(getSectionListItem(publication, rootSection));
+			sectionListItems.add(sectionListItemFactory.createSectionListItem(publication.getName(), rootSection));
 		}
 		return new ModelAndView("", "model", sectionListItems);
 	}
@@ -44,16 +46,10 @@ public class SectionController {
 		Section[] subSections = section.getSubSections();
 		List<SectionListItem> sectionListItems = new ArrayList<SectionListItem>(subSections.length);
 		for(Section sectionItem : subSections) {
-			sectionListItems.add(getSectionListItem(publication, sectionItem));
+			sectionListItems.add(sectionListItemFactory.createSectionListItem(publication.getName(), sectionItem));
 		}
 
 		return new ModelAndView("", "model", sectionListItems);
-	}
-
-	private SectionListItem getSectionListItem(Publication publication, Section sectionItem) {
-		return new SectionListItem(sectionItem.getName(),
-				String.format(SECTIONS_URL_PATTERN, publication.getName(), sectionItem.getId()),
-				String.format(CONTENT_URL_PATTERN, publication.getName(), sectionItem.getId()));
 	}
 
 	public void setObjectLoader(ObjectLoader objectLoader) {
