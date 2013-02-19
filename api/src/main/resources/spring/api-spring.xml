@@ -13,8 +13,7 @@
     <bean id="api" class="neo.xredsys.api.IOAPI" factory-method="getAPI"/>
     <bean id="objectLoader" factory-bean="api" factory-method="getObjectLoader"/>
 
-    <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
-	<bean class="se.svt.api.viewresolver.SvtContentNegotiatingViewResolver">
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
         <property name="ignoreAcceptHeader" value="true"/>
         <property name="favorParameter" value="true"/>
@@ -36,8 +35,6 @@
 				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 					<property name="contentType" value="application/xml;charset=UTF-8"/>
 					<property name="marshaller">
-						<!--<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller"/>-->
-						<!--<bean class="org.springframework.oxm.castor.CastorMarshaller" />-->
 						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
 							<property name="encoding" value="UTF-8"/>
 						</bean>
