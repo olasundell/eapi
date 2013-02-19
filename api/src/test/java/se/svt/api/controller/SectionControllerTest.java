@@ -38,7 +38,7 @@ public class SectionControllerTest {
 		sectionController.setObjectLoader(objectLoader);
 		ModelAndView modelAndView = sectionController.displayRootSections();
 		//noinspection unchecked
-		List<SectionListItem> sections = (List<SectionListItem>) modelAndView.getModel().get("sections");
+		List<SectionListItem> sections = (List<SectionListItem>) modelAndView.getModel().get("model");
 		assertEquals(3, sections.size());
 		assertEquals("http://svt.se/svtapi/svtse/sections/1", sections.get(0).getUrl());
 		assertEquals(svtse.getName(), sections.get(0).getName());

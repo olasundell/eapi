@@ -34,7 +34,7 @@ public class SectionController {
 			Section rootSection = publication.getRootSection();
 			sectionListItems.add(getSectionListItem(publication, rootSection));
 		}
-		return new ModelAndView("", "sections", sectionListItems);
+		return new ModelAndView("", "model", sectionListItems);
 	}
 
 	@RequestMapping(value = "/{publication}/sections/{sectionId}", method = RequestMethod.GET)
