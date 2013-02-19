@@ -30,7 +30,7 @@ public class SectionControllerTest {
 		sectionController.setObjectLoader(objectLoader);
 
 		ModelAndView modelAndView = sectionController.displaySections(1);
-		List<SectionListItem> sections = (List<SectionListItem>) modelAndView.getModel().get("sections");
+		List<SectionListItem> sections = (List<SectionListItem>) modelAndView.getModel().get("model");
 		assertEquals(1, sections.size());
 		SectionListItem sectionListItem = sections.get(0);
 		assertEquals(subsection.getName(), sectionListItem.getName());

@@ -8,12 +8,13 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<mvc:annotation-driven/>
-	<context:component-scan base-package="se.svt.api"/>
+	<context:component-scan base-package="se.svt.api" />
 
     <bean id="api" class="neo.xredsys.api.IOAPI" factory-method="getAPI"/>
     <bean id="objectLoader" factory-bean="api" factory-method="getObjectLoader"/>
 
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+	<bean class="se.svt.api.viewresolver.SvtContentNegotiatingViewResolver">
         <property name="order" value="1"/>
         <property name="ignoreAcceptHeader" value="true"/>
         <property name="favorParameter" value="true"/>
@@ -22,6 +23,7 @@
         <property name="mediaTypes">
             <map>
                 <entry key="json" value="application/json"/>
+				<entry key="xml" value="application/xml"/>
             </map>
         </property>
         <property name="defaultViews">
@@ -30,6 +32,19 @@
                 <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
                     <property name="extractValueFromSingleKeyModel" value="true"/>
                 </bean>
+				<!-- XML view -->
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="contentType" value="application/xml;charset=UTF-8"/>
+					<property name="marshaller">
+						<!--<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller"/>-->
+						<!--<bean class="org.springframework.oxm.castor.CastorMarshaller" />-->
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+							<property name="encoding" value="UTF-8"/>
+						</bean>
+					</property>
+
+					<property name="modelKey" value="model" />
+				</bean>
             </list>
         </property>
     </bean>

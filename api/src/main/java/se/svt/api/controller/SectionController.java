@@ -32,7 +32,7 @@ public class SectionController {
 			sectionListItems.add(new SectionListItem(sectionItem.getName()));
 		}
 
-		return new ModelAndView("", "sections", sectionListItems);
+		return new ModelAndView("", "model", sectionListItems);
 	}
 
 	public void setObjectLoader(ObjectLoader objectLoader) {
