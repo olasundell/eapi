@@ -50,7 +50,7 @@ public class ContentTypeController {
 		return new ModelAndView("", "model", contentTypes);
 	}
 
-	@RequestMapping(value = "/contenttype/{publicationName}/{contentType}", method = RequestMethod.GET)
+	@RequestMapping(value = "/contenttype/{publicationName}/{contentType}/", method = RequestMethod.GET)
 	public ModelAndView listBasedOnContentType(@PathVariable String publicationName,
 											   @PathVariable String contentType) {
 		final Publication publication = objectLoader.getPublication(publicationName);
