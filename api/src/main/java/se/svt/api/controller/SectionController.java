@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import se.svt.api.controller.converter.PublicationConverter;
 import se.svt.api.domain.SectionListItem;
+import se.svt.api.domain.SectionModel;
 import se.svt.api.factory.SectionListItemFactory;
+import se.svt.api.factory.SectionModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class SectionController {
 	public static final String SECTIONS_URL_PATTERN = "http://svt.se/svtapi/%s/sections/%d";
 	public static final String CONTENT_URL_PATTERN = "http://svt.se/svtapi/%s/content/%d";
 	private final SectionListItemFactory sectionListItemFactory = new SectionListItemFactory();
+	private final SectionModelFactory sectionModelFactory = new SectionModelFactory(this);
 	@Autowired
 	private ObjectLoader objectLoader;
 
@@ -42,14 +45,10 @@ public class SectionController {
 	@RequestMapping(value = "/{publication}/sections/{sectionId}", method = RequestMethod.GET)
 	public final ModelAndView displaySections(@PathVariable Publication publication,
 											  @PathVariable int sectionId) {
-		Section section = objectLoader.getSection(sectionId);
-		Section[] subSections = section.getSubSections();
-		List<SectionListItem> sectionListItems = new ArrayList<SectionListItem>(subSections.length);
-		for(Section sectionItem : subSections) {
-			sectionListItems.add(sectionListItemFactory.createSectionListItem(publication.getName(), sectionItem));
-		}
+		final String publicationName = publication.getName();
+		SectionModel model = sectionModelFactory.createSectionModel(publicationName, objectLoader.getSection(sectionId));
 
-		return new ModelAndView("", "model", sectionListItems);
+		return new ModelAndView("", "model", model);
 	}
 
 	public void setObjectLoader(ObjectLoader objectLoader) {
